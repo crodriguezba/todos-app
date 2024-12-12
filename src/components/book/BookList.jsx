@@ -1,37 +1,60 @@
 import { useState } from "react";
 
-const BooList = () => {
+import BookForm from "./BookForm"
+import BookItem from "./BookItem"
+
+const BookList = () => {
     //logica
-    const [books, setBooks] = useState([]);
-    const [newBook, setNewBook] = useState('')
-    const addBook = () => {
+    const [books, setBooks] = useState([{
+        id: 1,
+        title: 'Libro-titulo',
+        author: 'Carlos',
+        year: '1970',
+        isLoaned: false
+    }]);
+    
+
+    const addBook = (bookData) => {
         const newBook = {
             id: Date.now(),
-            name: newBook,
-        }
-        setBooks ([...books, addBook]);
-        setNewBook ('')
+            ...bookData,
+            isLoaned: false,
+        };
+        setBooks ([...books, newBook]);
     }
 
     const deleteBook = (bookId) => {
         setBooks(books.filter(book => book.id !== bookId))
-    }
+    };
+
+    const toggleLoaned = (bookId) => {
+        setBooks(books.map(book => 
+            book.id === bookId ? { ...book, isLoaned: !book.isLoaned } : book
+        ));
+    };
 
     const availableBooks = books.filter(book => !book.isLoaned).length;
     
     //render (jsx)
     return (
-        <div className="wrapper">
+        <div className="flex flex-col sm:flex-row items-start sm:items-center gap-2 p-4 border rounded mb-2 bg-white">
             <h2>Book List</h2> 
             <div>
-                <input
-                    type="text"
-                    value={newBook}
-                    onChange={(e) => setNewBook(e.target.value)}
-                    placeholder="Add a new book"
-                />
-                <button onClick={addBook}>Add</button>  
+                <p>Total de libros: {books.length} | Disponibles: {availableBooks}</p>
+                <BookForm onAddBook={addBook} />
+                <ul>
+                    {books.map((book) => (
+                        <BookItem 
+                            key={book.id} 
+                            book={book} 
+                            onDeleteBook={deleteBook} 
+                            onToggleLoaned={toggleLoaned} 
+                        />
+                    ))}
+                </ul> 
             </div>
         </div>
     );
 }
+
+export default BookList;

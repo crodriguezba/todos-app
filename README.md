@@ -10,3 +10,7 @@ Currently, two official plugins are available:
 Para crear en el mismo direcotrio donde se quiere crear y escribir esto para React --> 
 npm create vite@latest todos-app -- --template react
 luego seguir instrucciones, el todos-app es el nombre del proyecto
+
+TAILWIND
+npm install -D tailwindcss postcss autoprefixer
+npx tailwindcss init -p
