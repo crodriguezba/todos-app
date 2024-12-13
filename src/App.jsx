@@ -2,12 +2,13 @@ import './App.css'
 import BookList from './components/book/BookList'
 
 function App() {
-  
-
   return (
-    <>
-      <BookList />
-    </>
+    <div>
+      <h1>Biblioteca municipal</h1>
+      <div>
+        <BookList />
+      </div>
+    </div>
   )
 }
 
