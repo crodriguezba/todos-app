@@ -13,7 +13,7 @@ const BookList = () => {
             year: '1590',
             isLoaned: false
         }
-    ])
+    ]);
 
     const addBook = (bookData) => {
         const newBook = {
@@ -22,7 +22,13 @@ const BookList = () => {
             isLoaned: false
         };
         setBooks([...books, newBook]);
-    }
+    };
+
+    const toogleLoan = (bookId) => {
+        setBooks(books.map(book => 
+            book.id === bookId ? {...book, isLoaned: !book.isLoaned} : book
+        ))
+    };
 
     const deleteBook = (bookId) => {
         setBooks(books.filter(book => book.id !== bookId) )
@@ -33,20 +39,21 @@ const BookList = () => {
     //render (jsx)
     return (
         <div>
-            <div>
-                <p>
+            <div className='mb-6 p-4 bg-blue-50 rounded'>
+                <p className='text-blue-800'>
                     Total de libros: {books.length} | Disponibles: {availableBooks}
                 </p>
             </div>
             <BookForm onAddBook={addBook} />
 
-            <div>
+            <div className='space-y-2'>
                 {
                     books.map(book => (
                         <BookItem 
                             key={book.id}
                             book={book}
                             onDelete={deleteBook}
+                            onLoan={toogleLoan}
                         />
                     ))
                 }
